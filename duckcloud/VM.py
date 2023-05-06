@@ -22,6 +22,7 @@ class VMstream:
 		self.sio.disconnect()
 		del self
 	
+# note to self: improve the repetitive shit code
 
 class VM:
 	def __init__(self, index, data, token):
@@ -32,8 +33,40 @@ class VM:
 		self.status = data["status"]
 	def delete(self):
 		r = requests.get("https://duckcloud.pcprojects.tk/burn/"+str(self.index), headers={"cookie": "token="+self.token}, allow_redirects=False)
-		print(r.status)
-		return True # i will handle this stuff later
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
+	def chown(self, username):
+		r = requests.post("https://duckcloud.pcprojects.tk/chown/"+str(self.index)+"?username="+username, headers={"cookie": "token="+self.token}, allow_redirects=False)
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
+	def whitelist(self, username):
+		r = requests.post("https://duckcloud.pcprojects.tk/whitectl/"+str(self.index)+"?based=0&username="+username, headers={"cookie": "token="+self.token}, allow_redirects=False)
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
+	def clear_whitelist(self):
+		r = requests.get("https://duckcloud.pcprojects.tk/whitectlreset/"+str(self.index), headers={"cookie": "token="+self.token}, allow_redirects=False)
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
+	def ramset(self, mb):
+		r = requests.post("https://duckcloud.pcprojects.tk/ramset/"+str(self.index)+"?ramset="+mb, headers={"cookie": "token="+self.token}, allow_redirects=False)
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
+	def resize(self, width, height):
+		r = requests.post(f"https://duckcloud.pcprojects.tk/resize/{self.index}?w={width}&h={height}" headers={"cookie": "token="+self.token}, allow_redirects=False) # notepad++ doesnt highlight f strings bruh
+		if "Location" in r.headers:
+			return True
+		else:
+			return False
 	def rename(self, newname):
 		r = requests.post("https://duckcloud.pcprojects.tk/ren/"+str(self.index), json={"vmname": newname}, headers={"cookie": "token="+self.token}, allow_redirects=False)
 		if r.headers["Location"] == "/settings/"+str(self.index):
