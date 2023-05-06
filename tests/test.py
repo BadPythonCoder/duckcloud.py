@@ -7,5 +7,4 @@ def test(dc):
 	session = dc.login("cookie.txt", id, secret)
 	VMS = session.listVMS()
 	vm = next(VMS)
-	vm.delete()
-	print(vm.status)
+	print(vm.name)

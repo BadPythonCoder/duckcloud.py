@@ -62,7 +62,7 @@ class VM:
 		else:
 			return False
 	def resize(self, width, height):
-		r = requests.post(f"https://duckcloud.pcprojects.tk/resize/{self.index}?w={width}&h={height}" headers={"cookie": "token="+self.token}, allow_redirects=False) # notepad++ doesnt highlight f strings bruh
+		r = requests.post(f"https://duckcloud.pcprojects.tk/resize/{self.index}?w={width}&h={height}", headers={"cookie": "token="+self.token}, allow_redirects=False) # notepad++ doesnt highlight f strings bruh
 		if "Location" in r.headers:
 			return True
 		else:
